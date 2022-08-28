@@ -13,14 +13,10 @@ public class UserRegisterDto {
 
     private String surname;
 
-
     private String email;
 
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_roles",
-            joinColumns = {@JoinColumn(name = "user_d")},
-            inverseJoinColumns = {@JoinColumn(name = "roles_id")})
+
     private List<Role> roles;
 }

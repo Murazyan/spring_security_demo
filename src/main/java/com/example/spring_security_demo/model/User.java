@@ -1,6 +1,9 @@
 package com.example.spring_security_demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -11,14 +14,18 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(schema = "security_dem",name = "users")
+@Builder
+@Table( name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+//    @GeneratedValue(generator = "UUID")
+//    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private UUID id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
@@ -39,7 +46,7 @@ public class User {
     @Column
     private LocalDateTime updated;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_d")},
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})

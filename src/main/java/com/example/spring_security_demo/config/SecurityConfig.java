@@ -4,9 +4,11 @@ package com.example.spring_security_demo.config;
 import com.example.spring_security_demo.service.security.CurrentUserDetailServiceImpl;
 import com.example.spring_security_demo.service.security.JwtAuthenticationEntryPoint;
 import com.example.spring_security_demo.service.security.JwtAuthenticationTokenFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,15 +25,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@RequiredArgsConstructor
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Autowired
-    private CurrentUserDetailServiceImpl userDetailsService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final PasswordEncoder passwordEncoder;
+    private final CurrentUserDetailServiceImpl userDetailsService;
+
+
+
+    private  final JwtAuthenticationEntryPoint unauthorizedHandler;
 
 
 
@@ -68,10 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 
     @Bean
@@ -79,14 +78,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationTokenFilter();
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(final CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE");
-            }
-        };
-    }
+
 
 }

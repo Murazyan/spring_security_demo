@@ -13,7 +13,7 @@ public interface UserService {
 
     ResponseEntity<UserResponseDto> userById(UUID id);
 
-    ResponseEntity<UserResponseDto> register(UserRegisterDto userData);
+    UserResponseDto register(UserRegisterDto userData);
 
     ResponseEntity<AuthorizationResponse> login(AuthorizationRequest authorizationRequest);
 
