@@ -46,7 +46,7 @@ public class User {
     @Column
     private LocalDateTime updated;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_d")},
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})
