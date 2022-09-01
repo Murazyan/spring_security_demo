@@ -9,12 +9,12 @@ import com.example.spring_security_demo.mapper.UserResponseMapper;
 import com.example.spring_security_demo.model.User;
 import com.example.spring_security_demo.repository.UserRepository;
 import com.example.spring_security_demo.service.UserService;
+import com.example.spring_security_demo.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+import java.util.Optional;
 
 @Service
 
@@ -25,10 +25,11 @@ public class UserServiceImpl implements UserService {
     private final UserEntityMapper entityMapper;
     private final UserResponseMapper responseMapper;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenUtil tokenUtil;
 
     @Override
-    public ResponseEntity<UserResponseDto> userById(UUID id) {
-        return null;
+    public UserResponseDto userById(Long id) {
+        return userRepository.findById(id).map(responseMapper).orElse(null);
     }
 
     @Override
@@ -43,7 +44,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<AuthorizationResponse> login(AuthorizationRequest authorizationRequest) {
-        return null;
+    public AuthorizationResponse login(AuthorizationRequest authorizationRequest) {
+        Optional<User> userOptional = userRepository.findByEmail(authorizationRequest.getEmail());
+        if (userOptional.isPresent() && passwordEncoder.matches(authorizationRequest.getPassword(), userOptional.get().getPassword())) {
+            return new AuthorizationResponse(true, tokenUtil.generateToken(userOptional.get()));
+        } else {
+            return new AuthorizationResponse(false, null);
+        }
     }
 }

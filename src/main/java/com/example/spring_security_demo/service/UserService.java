@@ -11,10 +11,10 @@ import java.util.UUID;
 public interface UserService {
 
 
-    ResponseEntity<UserResponseDto> userById(UUID id);
+    UserResponseDto userById(Long id);
 
     UserResponseDto register(UserRegisterDto userData);
 
-    ResponseEntity<AuthorizationResponse> login(AuthorizationRequest authorizationRequest);
+    AuthorizationResponse login(AuthorizationRequest authorizationRequest);
 
 }

@@ -21,7 +21,10 @@ public class Role {
         @Column(name = "id")
         private long id;
 
+        @Column
         private String name;
+
+
         public Role(String name) {
                 this.name = name;
         }

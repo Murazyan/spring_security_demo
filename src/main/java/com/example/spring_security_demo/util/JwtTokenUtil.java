@@ -1,5 +1,6 @@
 package com.example.spring_security_demo.util;
 
+import com.example.spring_security_demo.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,7 +27,7 @@ public class JwtTokenUtil implements Serializable {
     private Long expiration;
 
 
-    public String getUsernameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -63,27 +64,18 @@ public class JwtTokenUtil implements Serializable {
         return (lastPasswordReset != null && created.before(lastPasswordReset));
     }
 
+    public String generateToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email",user.getEmail());
+        claims.put("id",user.getId());
+        return doGenerateToken(claims, user.getEmail());
+    }
 
-    public String generateToken(String email) {
-        Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, email);
-    }
-    public String generateTokenP(String email, String password) {//թոկենի գեներացիա ըստ էլ-հասցեի, որում պահվում է նաև կոդավորված գաղտնաբառը, գաղտնաբառը պահվում է "password" բանալիով
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("password",password);
-        return doGenerateToken(claims, email);
-    }
-    public String generateTokenPassAndId(String email, String password,int id) {//թոկենի գեներացիա ըստ էլ-հասցեի, որում պահվում է նաև կոդավորված գաղտնաբառը, գաղտնաբառը պահվում է "password" բանալիով
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("password",password);
-        claims.put("id",id);
-        return doGenerateToken(claims, email);
-    }
+
 
     private String doGenerateToken(Map<String, Object> claims, String subject) {
         final Date createdDate = new Date();
         final Date expirationDate = calculateExpirationDate(createdDate);
-        System.out.println("doGenerateToken " + createdDate);
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
@@ -109,7 +101,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public Boolean validateToken(String token, String email) {
-        final String username = getUsernameFromToken(token);
+        final String username = getEmailFromToken(token);
         final Date created = getIssuedAtDateFromToken(token);
         return (username.equals(email)
                 && !isTokenExpired(token));

@@ -20,7 +20,7 @@ public class SpringSecurityDemoApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         int roleSize = roleRepository.findAll().size();
-        if(roleSize==0){
+        if (roleSize == 0) {
             roleRepository.save(new Role("admin"));
             roleRepository.save(new Role("user1"));
             roleRepository.save(new Role("user2"));
