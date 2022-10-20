@@ -37,17 +37,17 @@ public class SpringSecurityDemoApplication implements CommandLineRunner {
 //                .surname("Poxosyan")
 //                .build()));
 
-        String emailFromToken = tokenUtil.getEmailFromToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQb3hvc0BnbWFpbC5jb20iLCJpZCI6MTEsImV4cCI6MTY3NTAyMTk3NCwidXNlciI6eyJpZCI6MTEsIm5hbWUiOiJQb3hvcyIsInN1cm5hbWUiOiJQb3hvc3lhbiIsImVtYWlsIjoiUG94b3NAZ21haWwuY29tIiwicGFzc3dvcmQiOiIxMjMiLCJjcmVhdGVkIjpudWxsLCJ1cGRhdGVkIjpudWxsLCJyb2xlcyI6bnVsbH0sImlhdCI6MTY2NjAyMTk3NH0.MAtoxCySBOO6L83o8D5raD9G8blR7pTSaJBBmCni4qmJ4luvaqDDxZWlJr_-8PKVHnUXa-Usi5VYdd8msdpVLA");
-        System.out.println("Email "+emailFromToken);
-        LinkedHashMap user = tokenUtil.getAllClaimsFromToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQb3hvc0BnbWFpbC5jb20iLCJpZCI6MTEsImV4cCI6MTY3NTAyMTk3NCwidXNlciI6eyJpZCI6MTEsIm5hbWUiOiJQb3hvcyIsInN1cm5hbWUiOiJQb3hvc3lhbiIsImVtYWlsIjoiUG94b3NAZ21haWwuY29tIiwicGFzc3dvcmQiOiIxMjMiLCJjcmVhdGVkIjpudWxsLCJ1cGRhdGVkIjpudWxsLCJyb2xlcyI6bnVsbH0sImlhdCI6MTY2NjAyMTk3NH0.MAtoxCySBOO6L83o8D5raD9G8blR7pTSaJBBmCni4qmJ4luvaqDDxZWlJr_-8PKVHnUXa-Usi5VYdd8msdpVLA").get("user", LinkedHashMap.class);
-        System.out.println("User from toke "+user);
-        System.out.println("User from toke id"+user.get("id"));
+//        String emailFromToken = tokenUtil.getEmailFromToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQb3hvc0BnbWFpbC5jb20iLCJpZCI6MTEsImV4cCI6MTY3NTAyMTk3NCwidXNlciI6eyJpZCI6MTEsIm5hbWUiOiJQb3hvcyIsInN1cm5hbWUiOiJQb3hvc3lhbiIsImVtYWlsIjoiUG94b3NAZ21haWwuY29tIiwicGFzc3dvcmQiOiIxMjMiLCJjcmVhdGVkIjpudWxsLCJ1cGRhdGVkIjpudWxsLCJyb2xlcyI6bnVsbH0sImlhdCI6MTY2NjAyMTk3NH0.MAtoxCySBOO6L83o8D5raD9G8blR7pTSaJBBmCni4qmJ4luvaqDDxZWlJr_-8PKVHnUXa-Usi5VYdd8msdpVLA");
+//        System.out.println("Email "+emailFromToken);
+//        LinkedHashMap user = tokenUtil.getAllClaimsFromToken("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQb3hvc0BnbWFpbC5jb20iLCJpZCI6MTEsImV4cCI6MTY3NTAyMTk3NCwidXNlciI6eyJpZCI6MTEsIm5hbWUiOiJQb3hvcyIsInN1cm5hbWUiOiJQb3hvc3lhbiIsImVtYWlsIjoiUG94b3NAZ21haWwuY29tIiwicGFzc3dvcmQiOiIxMjMiLCJjcmVhdGVkIjpudWxsLCJ1cGRhdGVkIjpudWxsLCJyb2xlcyI6bnVsbH0sImlhdCI6MTY2NjAyMTk3NH0.MAtoxCySBOO6L83o8D5raD9G8blR7pTSaJBBmCni4qmJ4luvaqDDxZWlJr_-8PKVHnUXa-Usi5VYdd8msdpVLA").get("user", LinkedHashMap.class);
+//        System.out.println("User from toke "+user);
+//        System.out.println("User from toke id"+user.get("id"));
         int roleSize = roleRepository.findAll().size();
         if (roleSize == 0) {
             roleRepository.save(new Role("admin"));
-            roleRepository.save(new Role("user1"));
-            roleRepository.save(new Role("user2"));
-            roleRepository.save(new Role("user3"));
+            roleRepository.save(new Role("manager"));
+            roleRepository.save(new Role("cashier"));
+            roleRepository.save(new Role("user"));
         }
     }
 }

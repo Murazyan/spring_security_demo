@@ -17,13 +17,12 @@ public class Role {
         @Id
 //        @GeneratedValue(generator = "UUID")
 //        @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id")
         private long id;
 
         @Column
         private String name;
-
 
         public Role(String name) {
                 this.name = name;

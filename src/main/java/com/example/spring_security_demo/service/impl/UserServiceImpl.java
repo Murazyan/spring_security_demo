@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto register(UserRegisterDto userData) {
+    public UserResponseDto register(final UserRegisterDto userData) {
         if (!userRepository.existsByEmail(userData.getEmail())) {
             User user = entityMapper.apply(userData);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
