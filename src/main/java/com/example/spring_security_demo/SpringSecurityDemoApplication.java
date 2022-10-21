@@ -3,12 +3,15 @@ package com.example.spring_security_demo;
 import com.example.spring_security_demo.model.Role;
 import com.example.spring_security_demo.model.User;
 import com.example.spring_security_demo.repository.RoleRepository;
+import com.example.spring_security_demo.service.UserService;
+import com.example.spring_security_demo.service.impl.UserServiceImpl;
 import com.example.spring_security_demo.util.JwtTokenUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.LinkedHashMap;
 
@@ -17,6 +20,8 @@ public class SpringSecurityDemoApplication implements CommandLineRunner {
 
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private UserServiceImpl userService;
 
 
     @Autowired
@@ -28,6 +33,7 @@ public class SpringSecurityDemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        userService.test();
 //        System.out.println("*****************");
 //        System.out.println(tokenUtil.generateToken(User.builder()
 //                .id(11L)

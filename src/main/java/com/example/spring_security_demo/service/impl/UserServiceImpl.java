@@ -13,7 +13,9 @@ import com.example.spring_security_demo.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -51,5 +53,34 @@ public class UserServiceImpl implements UserService {
         } else {
             return new AuthorizationResponse(false, null);
         }
+    }
+
+
+    //    @Transactional(readOnly = true)
+    @Transactional(rollbackFor ={IOException.class})
+    public void test() throws IOException {
+        User save = userRepository.save(User.builder()
+                .name("test1")
+                .email("tes1")
+                .password("test1")
+                .surname("test1")
+                .build());
+        System.out.println("test1 : " + save);
+
+        User save2 = userRepository.save(User.builder()
+                .name("test2")
+                .email("test2")
+                .password("test2")
+                .surname("test2")
+                .build());
+        System.out.println("test2 : " + save2);
+        throw new IOException();
+
+//        User save3 = userRepository.save(User.builder()
+//                .name("test2")
+//                .password("test2")
+//                .surname("test2")
+//                .build());
+//        System.out.println("test3 : "+save3);
     }
 }
